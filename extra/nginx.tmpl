@@ -111,6 +111,10 @@ server {
 	include {{ printf "/etc/nginx/vhost.d/%s" $host }};
 	{{ end }}
 
+	location /static {
+		alias /var/www/static;
+	}
+
 	location / {
 		proxy_pass {{ $proto }}://{{ $host }};
 		{{ if (exists (printf "/etc/nginx/htpasswd/%s" $host)) }}
@@ -127,6 +131,10 @@ server {
 	{{ if (exists (printf "/etc/nginx/vhost.d/%s" $host)) }}
 	include {{ printf "/etc/nginx/vhost.d/%s" $host }};
 	{{ end }}
+
+	location /static {
+		alias /var/www/static;
+	}
 
 	location / {
 		proxy_pass {{ $proto }}://{{ $host }};

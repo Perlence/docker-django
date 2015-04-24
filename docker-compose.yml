@@ -4,6 +4,7 @@ nginx:
     - '80:80'
   volumes:
     - /tmp/nginx:/etc/nginx/conf.d
+    - ./django-example/static:/var/www/static
 
 dockergen:
   image: jwilder/docker-gen:latest
