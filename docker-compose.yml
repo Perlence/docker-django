@@ -1,12 +1,30 @@
-# Docker-compose.yml file for atbaker/docker-django project
+nginx:
+  image: jwilder/nginx-proxy
+  links:
+    - django
+  ports:
+    - '80:80'
+  volumes:
+    - /var/run/docker.sock:/tmp/docker.sock
 
-# This defines a service for the Django app
 django:
+  build: .
+  links:
+    - postgres
+    - memcached
+  expose:
+    - '8000'
+  # ports:
+  #   - '8000:8000'
+  volumes:
+    - .:/usr/src/app
+  environment:
+    VIRTUAL_HOST: 5.9.69.226
 
-
-# This defines a service for the Postgres database
 postgres:
+  image: postgres:9.3
+  # environment:
+  #   POSTGRES_PASSWORD: p01f0102
 
-
-# This defines a service for the Memcached server
 memcached:
+  image: atbaker/memcached-verbose
